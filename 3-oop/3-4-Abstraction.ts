@@ -8,7 +8,13 @@
         makeCoffee(shots: number): CoffeeCup;
     }
 
-    class CoffeeMachine implements CoffeeMaker {
+    interface CommercialCoffeeMaker {
+        makeCoffee(shots: number): CoffeeCup;
+        fillCoffeeBeans(beans: number): void;
+        clean(): void;
+    }
+
+    class CoffeeMachine implements CoffeeMaker, CommercialCoffeeMaker {
         private static BEANS_GRAM_PER_SHOT: number = 7; // class level
         private coffeeBeans: number = 0; // instance (object) level
 
@@ -26,6 +32,10 @@
             } else {
                 this.coffeeBeans += beans;
             }
+        }
+
+        clean() {
+            console.log('cleaning the machine...🧼');
         }
 
         private grindBeans(shots: number) {
@@ -55,11 +65,41 @@
         }
     }
 
+    /**
+     * 인터페이스로 타입 제한하기
+     */
+
+    // Example 1
     const maker1: CoffeeMachine = CoffeeMachine.makeMachine(32);
     maker1.fillCoffeeBeans(30);
     maker1.makeCoffee(2);
 
-    const maker2: CoffeeMaker = CoffeeMachine.makeMachine(32);
-    // maker2.fillCoffeeBeans(30); // 인터페이스에 정의되지 않았으므로 사용할 수 없음
+    const maker2: CommercialCoffeeMaker = CoffeeMachine.makeMachine(32);
+    maker2.fillCoffeeBeans(30);
     maker2.makeCoffee(2);
+    maker2.clean();
+
+    // Example 2
+    class AmateurUser {
+        constructor(private machine: CoffeeMaker) {}
+        makeCoffee() {
+            const coffee = this.machine.makeCoffee(2);
+        }
+    }
+
+    class ProBarista {
+        constructor(private machine: CommercialCoffeeMaker) {}
+        makeCoffee() {
+            const coffee = this.machine.makeCoffee(2);
+            this.machine.fillCoffeeBeans(40);
+            this.machine.clean();
+        }
+    }
+
+    // Exapmle 3
+    const maker: CoffeeMachine = CoffeeMachine.makeMachine(32);
+    const amateur = new AmateurUser(maker);
+    const pro = new ProBarista(maker);
+    amateur.makeCoffee();
+    pro.makeCoffee();
 }
