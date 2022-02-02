@@ -1,11 +1,19 @@
 {
-    class TimeoutError extends Error {}
-
-    class OfflineError extends Error {}
+    type NetworkErrorState = {
+        result: 'fail';
+        reason: 'offline' | 'down' | 'timeout';
+    };
+    type SuccessState = {
+        result: 'success';
+    };
+    type ResultState = SuccessState | NetworkErrorState;
 
     class NetworkClient {
-        tryConnet(): void {
-            throw new OfflineError('no network');
+        tryConnet(): ResultState {
+            return {
+                result: 'fail',
+                reason: 'offline',
+            };
         }
     }
 
@@ -13,8 +21,7 @@
         constructor(private client: NetworkClient) {}
 
         login() {
-            // Bad exception handling point 💩
-            this.client.tryConnet();
+            console.log(this.client.tryConnet());
         }
     }
 
@@ -22,12 +29,9 @@
         constructor(private userService: UserService) {}
 
         run() {
-            // Awesome exception handling point ✨
             try {
                 this.userService.login();
-            } catch (e) {
-                // show dialog to user
-            }
+            } catch (e) {}
         }
     }
 
