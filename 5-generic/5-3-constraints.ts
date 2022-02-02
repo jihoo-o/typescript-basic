@@ -60,4 +60,22 @@
     const rukeAfterPay = pay(ruke);
     halseyAfterPay.workFullTime();
     rukeAfterPay.workPartTime();
+
+    // Examples
+    function getValue<T, K extends keyof T>(obj: T, key: K): T[K] {
+        return obj[key];
+    }
+
+    const obj1 = {
+        name: 'Json',
+        age: 22,
+    };
+
+    const obj2 = {
+        animal: '🐶',
+    };
+
+    console.log(getValue(obj1, 'name'));
+    console.log(getValue(obj1, 'age'));
+    console.log(getValue(obj2, 'animal'));
 }
