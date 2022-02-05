@@ -74,6 +74,7 @@ body {
 .document {
     position: relative;
     height: 100%;
+    overflow-y: scroll;
 }
 
 .document:before {
