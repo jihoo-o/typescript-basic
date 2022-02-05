@@ -1,6 +1,7 @@
 import { VideoComponent } from './components/page/item/video.js';
 import { ImageComponent } from './components/page/item/image.js';
 import { PageComponent } from './components/page/page.js';
+import { NoteComponent } from './components/page/item/note.js';
 
 class App {
     private readonly page: PageComponent;
@@ -20,6 +21,9 @@ class App {
             'https://www.youtube.com/watch?v=qwNCwzNOxk4'
         );
         video.attatchTo(appRoot, 'beforeend');
+
+        const note = new NoteComponent('note title', 'note content');
+        note.attatchTo(appRoot, 'beforeend');
     }
 }
 
