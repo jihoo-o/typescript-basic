@@ -16,6 +16,12 @@ body {
     margin: 0;
 }
 
+.app {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 .banner,
 .document,
 .footer {
@@ -27,10 +33,9 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 8rem;
 }
 
-.banner h1 {
+.banner__title {
     margin: 0;
 }
 
@@ -64,8 +69,6 @@ body {
 .document {
     position: relative;
     height: 100%;
-    max-height: 50rem;
-    overflow-y: scroll;
 }
 
 .document:before {
