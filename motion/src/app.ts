@@ -1,7 +1,11 @@
+import { PageComponent } from './components/page.js';
+
 class App {
-    constructor(root: HTMLElement) {
-        root.innerHTML = '<div>tmp</div>';
+    private readonly page: PageComponent;
+    constructor(appRoot: HTMLElement) {
+        this.page = new PageComponent();
+        this.page.attatchTo(appRoot);
     }
 }
 
-new App(document.querySelector('.document') as HTMLElement);
+new App(document.querySelector('.document')! as HTMLElement);

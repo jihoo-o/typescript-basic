@@ -1,7 +1,8 @@
-"use strict";
+import { PageComponent } from './components/page.js';
 class App {
-    constructor(root) {
-        root.innerHTML = '<div>tmp</div>';
+    constructor(appRoot) {
+        this.page = new PageComponent();
+        this.page.attatchTo(appRoot);
     }
 }
 new App(document.querySelector('.document'));
