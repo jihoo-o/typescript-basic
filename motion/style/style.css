@@ -110,11 +110,23 @@ body {
 /* items */
 .video__title,
 .image__title,
-.note__title {
+.note__title,
+.task__title {
     font-size: 1.3em;
     font-weight: 400;
 }
-.note__content {
+
+.note__content,
+.task__content {
     font-size: 1em;
     font-weight: 300;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+}
+
+.task__holder {
+    margin-left: 0.5rem;
 }

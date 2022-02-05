@@ -1,3 +1,4 @@
+import { TaskComponent } from './components/page/item/task.js';
 import { VideoComponent } from './components/page/item/video.js';
 import { ImageComponent } from './components/page/item/image.js';
 import { PageComponent } from './components/page/page.js';
@@ -12,6 +13,8 @@ class App {
         video.attatchTo(appRoot, 'beforeend');
         const note = new NoteComponent('note title', 'note content');
         note.attatchTo(appRoot, 'beforeend');
+        const task = new TaskComponent('task title', 'task content');
+        task.attatchTo(appRoot, 'beforeend');
     }
 }
 new App(document.querySelector('.document'));
