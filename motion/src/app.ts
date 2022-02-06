@@ -1,11 +1,12 @@
 import { TaskComponent } from './components/page/item/task.js';
 import { VideoComponent } from './components/page/item/video.js';
 import { ImageComponent } from './components/page/item/image.js';
-import { PageComponent } from './components/page/page.js';
+import { Composable, PageComponent } from './components/page/page.js';
 import { NoteComponent } from './components/page/item/note.js';
+import { Component } from './components/component.js';
 
 class App {
-    private readonly page: PageComponent;
+    private readonly page: Component & Composable;
     constructor(appRoot: HTMLElement) {
         this.page = new PageComponent();
         this.page.attatchTo(appRoot);
@@ -15,13 +16,13 @@ class App {
             'Image title',
             'https://i.picsum.photos/id/516/200/300.jpg?hmac=hMEuvTcrLNhrMSSGnaRit4YgalzJJ66stNu-UT70DKw'
         );
-        image.attatchTo(appRoot, 'beforeend');
+        this.page.addChild(image);
 
         const video = new VideoComponent(
             'video title',
             'https://www.youtube.com/embed/ttL-20rz_cE'
         );
-        video.attatchTo(appRoot, 'beforeend');
+        this.page.addChild(video);
 
         /* const video2 = new VideoComponent(
             'video title',
@@ -36,10 +37,10 @@ class App {
         video3.attatchTo(appRoot, 'beforeend'); */
 
         const note = new NoteComponent('note title', 'note content');
-        note.attatchTo(appRoot, 'beforeend');
+        this.page.addChild(note);
 
         const task = new TaskComponent('task title', 'task content');
-        task.attatchTo(appRoot, 'beforeend');
+        this.page.addChild(task);
     }
 }
 
