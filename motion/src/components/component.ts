@@ -17,11 +17,9 @@ export class BaseComponent<T extends HTMLElement> implements Component {
     }
 
     removeFrom(parent: HTMLElement) {
-        console.log('remove');
         if (parent !== this.element.parentElement) {
             throw new Error('Parent mismatch!');
         }
-        console.log('clear');
         parent.removeChild(this.element);
     }
 }

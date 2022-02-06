@@ -1,3 +1,4 @@
+import { InputDialog } from './components/dialog/dialog.js';
 import { TaskComponent } from './components/page/item/task.js';
 import { VideoComponent } from './components/page/item/video.js';
 import { ImageComponent } from './components/page/item/image.js';
@@ -45,6 +46,21 @@ class App {
 
         const task = new TaskComponent('task title', 'task content');
         this.page.addChild(task);
+
+        const imageBtn = document.querySelector(
+            '#new-image'
+        )! as HTMLButtonElement;
+        imageBtn.addEventListener('click', () => {
+            const dialog = new InputDialog();
+            dialog.setOnCloseListener(() => {
+                dialog.removeFrom(document.body);
+            });
+            dialog.setOnSubmitListener(() => {
+                // 섹션을 만들어서 페이지에 추가함
+                dialog.removeFrom(document.body);
+            });
+            dialog.attatchTo(document.body);
+        });
     }
 }
 
