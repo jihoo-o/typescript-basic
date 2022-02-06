@@ -19,9 +19,21 @@ class App {
 
         const video = new VideoComponent(
             'video title',
-            'https://www.youtube.com/watch?v=qwNCwzNOxk4'
+            'https://www.youtube.com/embed/ttL-20rz_cE'
         );
         video.attatchTo(appRoot, 'beforeend');
+
+        /* const video2 = new VideoComponent(
+            'video title',
+            'https://www.youtube.com/watch?v=ttL-20rz_cE'
+        );
+        video2.attatchTo(appRoot, 'beforeend');
+
+        const video3 = new VideoComponent(
+            'video title',
+            'https://www.youtube.com/embed/ttL-20rz_cE'
+        );
+        video3.attatchTo(appRoot, 'beforeend'); */
 
         const note = new NoteComponent('note title', 'note content');
         note.attatchTo(appRoot, 'beforeend');
