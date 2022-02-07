@@ -9,10 +9,18 @@ import {
 } from './components/page/page.js';
 import { NoteComponent } from './components/page/item/note.js';
 import { Component } from './components/component.js';
+import {
+    MediaInputDialog,
+    MediaItem,
+} from './components/dialog/input/media-input.js';
+/* import {
+    TextInputDialog,
+    TextItem,
+} from './components/dialog/input/text-input.js'; */
 
 class App {
     private readonly page: Component & Composable;
-    constructor(appRoot: HTMLElement) {
+    constructor(appRoot: HTMLElement, dialogRoot: HTMLElement) {
         this.page = new PageComponent(PageItemComponent);
         this.page.attatchTo(appRoot);
 
@@ -52,16 +60,21 @@ class App {
         )! as HTMLButtonElement;
         imageBtn.addEventListener('click', () => {
             const dialog = new InputDialog();
+            const mediaInputDialog = new MediaInputDialog();
+            dialog.addChild(mediaInputDialog);
+            dialog.attatchTo(dialogRoot);
+
             dialog.setOnCloseListener(() => {
-                dialog.removeFrom(document.body);
+                dialog.removeFrom(dialogRoot);
             });
             dialog.setOnSubmitListener(() => {
-                // 섹션을 만들어서 페이지에 추가함
-                dialog.removeFrom(document.body);
+                const { title, url }: MediaItem = mediaInputDialog.getInfo();
+                const newImage = new ImageComponent(title, url);
+                this.page.addChild(newImage);
+                dialog.removeFrom(dialogRoot);
             });
-            dialog.attatchTo(document.body);
         });
     }
 }
 
-new App(document.querySelector('.document')! as HTMLElement);
+new App(document.querySelector('.document')! as HTMLElement, document.body);

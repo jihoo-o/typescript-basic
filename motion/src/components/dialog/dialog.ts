@@ -46,18 +46,3 @@ export class InputDialog
         child.attatchTo(body);
     }
 }
-
-/* <div class="dialog__holder">
-    <p class="dialog-title">title</p>
-    <input type="text" class="dialog-title-input" />
-</div>
-<div class="dialog__holder">
-    <p class="dialog-body">body</p>
-    <textarea
-        name="dialog-body"
-        id="dialog-body"
-        rows="8"
-        class="dialog-body-input"
-        maxlength="300"
-    ></textarea>
-</div> */
