@@ -1,7 +1,8 @@
 import { BaseComponent } from '../../component.js';
+import { MediaItem } from '../../dialog/input/media-input.js';
 
 export class VideoComponent extends BaseComponent<HTMLElement> {
-    constructor(title: string, url: string) {
+    constructor({ title, url }: MediaItem) {
         super(`
             <section class="video">
                 <p class="video__title">title</p>

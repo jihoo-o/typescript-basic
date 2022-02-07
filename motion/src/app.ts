@@ -9,69 +9,67 @@ import {
 } from './components/page/page.js';
 import { NoteComponent } from './components/page/item/note.js';
 import { Component } from './components/component.js';
-import {
-    MediaInputDialog,
-    MediaItem,
-} from './components/dialog/input/media-input.js';
-/* import {
-    TextInputDialog,
-    TextItem,
-} from './components/dialog/input/text-input.js'; */
+import { MediaInputDialog } from './components/dialog/input/media-input.js';
+import { TextInputDialog } from './components/dialog/input/text-input.js';
+
+type InputComponentConstructor<T = MediaInputDialog | TextInputDialog> = {
+    new (): T;
+};
 
 class App {
     private readonly page: Component & Composable;
-    constructor(appRoot: HTMLElement, dialogRoot: HTMLElement) {
+    constructor(private appRoot: HTMLElement, private dialogRoot: HTMLElement) {
         this.page = new PageComponent(PageItemComponent);
-        this.page.attatchTo(appRoot);
+        this.page.attatchTo(this.appRoot);
 
-        // test
-        const image = new ImageComponent(
-            'Image title',
-            'https://i.picsum.photos/id/516/200/300.jpg?hmac=hMEuvTcrLNhrMSSGnaRit4YgalzJJ66stNu-UT70DKw'
+        this.bindElementToDialog<MediaInputDialog>(
+            '#new-image',
+            MediaInputDialog,
+            (inputDialog: MediaInputDialog) =>
+                new ImageComponent({ ...inputDialog.getInfo() })
         );
-        this.page.addChild(image);
 
-        const video = new VideoComponent(
-            'video title',
-            'https://www.youtube.com/embed/ttL-20rz_cE'
+        this.bindElementToDialog<MediaInputDialog>(
+            '#new-video',
+            MediaInputDialog,
+            (inputDialog: MediaInputDialog) =>
+                new VideoComponent({ ...inputDialog.getInfo() })
         );
-        this.page.addChild(video);
 
-        /* const video2 = new VideoComponent(
-            'video title',
-            'https://www.youtube.com/watch?v=ttL-20rz_cE'
+        this.bindElementToDialog<TextInputDialog>(
+            '#new-note',
+            TextInputDialog,
+            (inputDialog: TextInputDialog) =>
+                new NoteComponent({ ...inputDialog.getInfo() })
         );
-        video2.attatchTo(appRoot, 'beforeend');
 
-        const video3 = new VideoComponent(
-            'video title',
-            'https://www.youtube.com/embed/ttL-20rz_cE'
+        this.bindElementToDialog<TextInputDialog>(
+            '#new-task',
+            TextInputDialog,
+            (inputDialog: TextInputDialog) =>
+                new TaskComponent({ ...inputDialog.getInfo() })
         );
-        video3.attatchTo(appRoot, 'beforeend'); */
+    }
 
-        const note = new NoteComponent('note title', 'note content');
-        this.page.addChild(note);
-
-        const task = new TaskComponent('task title', 'task content');
-        this.page.addChild(task);
-
-        const imageBtn = document.querySelector(
-            '#new-image'
-        )! as HTMLButtonElement;
-        imageBtn.addEventListener('click', () => {
+    private bindElementToDialog<T extends MediaInputDialog | TextInputDialog>(
+        selector: string,
+        InputComponent: InputComponentConstructor<T>,
+        makeSection: (inputDialog: T) => Component
+    ) {
+        const element = document.querySelector(selector)! as HTMLButtonElement;
+        element.addEventListener('click', () => {
             const dialog = new InputDialog();
-            const mediaInputDialog = new MediaInputDialog();
-            dialog.addChild(mediaInputDialog);
-            dialog.attatchTo(dialogRoot);
+            const inputDialog = new InputComponent();
+            dialog.addChild(inputDialog);
+            dialog.attatchTo(this.dialogRoot);
 
             dialog.setOnCloseListener(() => {
-                dialog.removeFrom(dialogRoot);
+                dialog.removeFrom(this.dialogRoot);
             });
             dialog.setOnSubmitListener(() => {
-                const { title, url }: MediaItem = mediaInputDialog.getInfo();
-                const newImage = new ImageComponent(title, url);
-                this.page.addChild(newImage);
-                dialog.removeFrom(dialogRoot);
+                const section = makeSection(inputDialog);
+                this.page.addChild(section);
+                dialog.removeFrom(this.dialogRoot);
             });
         });
     }

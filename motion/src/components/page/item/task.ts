@@ -1,7 +1,8 @@
 import { BaseComponent } from '../../component.js';
+import { TextItem } from '../../dialog/input/text-input.js';
 
 export class TaskComponent extends BaseComponent<HTMLElement> {
-    constructor(title: string, body: string) {
+    constructor({ title, body }: TextItem) {
         super(`
             <section class="task">
                 <input type="checkbox" class="task__check"/>

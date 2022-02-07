@@ -1,7 +1,8 @@
 import { BaseComponent } from '../../component.js';
+import { TextItem } from '../../dialog/input/text-input.js';
 
 export class NoteComponent extends BaseComponent<HTMLElement> {
-    constructor(title: string, body: string) {
+    constructor({ title, body }: TextItem) {
         super(`
             <section class="note">
                 <p class="note__title">title</p>
